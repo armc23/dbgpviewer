@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-t!f^o_7yo9xs^i!irp)i0_oml=g=em3e&8a7(l%d*a1fu209h*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'netviewer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'myproject',
+        'NAME': 'mynetproject',
         'USER': 'myprojectuser',
         'PASSWORD': 'secret',
         'HOST': 'localhost',
