@@ -50,3 +50,7 @@ def register_user(request):
         form = SignUpForm()
         return render(request,'register.html',{'form':form}) 
     return render(request, 'register.html', {'form':form})
+
+def BootstrapFilterView(request):
+    records = Record.objects.all()
+    return render(request,"bottstrap_form.html",{'records':records})

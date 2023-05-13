@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block content%}
+<main role="main" class="container">
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="category">Site</label>
+                <select id="category" class="form-control" name="site">
+                  <option selected>Choose...</option>
+                  {% for cat in categories %}
+                  <option value="{{ cat }}">{{ cat }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="category">Prefix</label>
+                <select id="category" class="form-control" name="site">
+                  <option selected>Choose...</option>
+                  {% for cat in categories %}
+                  <option value="{{ cat }}">{{ cat }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+          <div class="form-group col-md-2 col-lg-2">
+            <label for="publishDateMin">Date minimum</label>
+            <input type="date" class="form-control" id="publishDateMin" name="date_min">
+          </div>
+          <div class="form-group col-md-2 col-lg-2">
+            <label for="publishDateMax">Date maximum</label>
+            <input type="date" class="form-control" id="publishDateMax" name="date_max">
+          </div>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+       
+       
+        
+      </form>
+
+      <hr />
+
+      <div class="row">
+        <ul>
+          {% for journal in queryset %}
+            <li>
+              {{ journal.title }}
+              <span>Author: {{ journal.author.name }}</span>
+              <span>
+                {% for cat in journal.categories.all %}
+                  {{ cat }}
+                {% endfor %}
+              </span>
+              <span>Publish date: {{ journal.publish_date }}</span>
+              <span>View count: {{ journal.views }}</span>
+              <span>Reviewed: {{ journal.reviewed }}</span>
+            </li>
+            <hr />
+          {% endfor %}
+        </ul>
+      </div>
+
+      
+    
+    </main>
+    
+    {% if user.is_authenticated %}
+
+    <table class="table table-hover table-bordered table-inverse">
+      <thead>
+        <tr>
+          <th scope="col">Site</th>
+          <th scope="col">Date and Time</th>
+          <th scope="col">Local Time and Date</th>
+          <th scope="col">Prefix</th>
+          <th scope="col">Path N:</th>
+          <th scope="col">BGP AS Path</th>
+          <th scope="col">BGP AS Path Length</th>
+          <th scope="col">Best path Selection reason</th>
+          <th scope="col">Metric</th>
+          <th scope="col">LocalPref</th>
+          <th scope="col">Weight</th>
+          <th scope="col">Route Last Update</th>
+          <th scope="col">Next Hope </th>
+          <th scope="col">Next Hope Accessible</th>
+          <th scope="col">Next Hope Metric</th>
+          <th scope="col">Next Hope Used</th>
+          <th scope="col">NextHope PeerId</th>
+          <th scope="col">NextHope RouterId</th>
+          <th scope="col">NextHope Hostname</th>
+          <th scope="col">NextHope Peer Type</th>
+     
+        </tr>
+      </thead>
+        <tbody>
+        
+        
+    
+    {% if records  %}
+      {% for record in records %}
+    
+      <tr>
+        <td>{{record.site}} </td>
+        <td>{{record.create_at}}</td>
+        <td>{{record.local_timezone}}</td>
+        <td>{{record.prefix}}</td>
+        <td>{{record.path}}</td>
+        <td>{{record.bgp_as_path}}</td>
+        <td>{{record.bgp_as_path_length}}</td>
+        <td>{{record.best_path_selection_reason}}</td>
+        <td>{{record.metric}}</td>
+        <td>{{record.weight}}</td>
+        <td>{{record.localpref}}</td>
+        
+        <td>{{record.last_update}}</td>
+        <td>{{record.next_hop}}</td>
+        
+        <td>{{record.next_hope_accessible}}</td>
+        <td>{{record.next_hope_used}}</td>
+        <td>{{record.next_hope_metric}}</td>
+        
+        <td> {{record.next_hope_peerId}}</td>
+        <td> {{record.next_hope_routerId}}</td>
+        <td> {{record.next_hope_hostname}}</td>
+        <td>{{record.next_hope_peer_type}}</td>
+      </tr>
+    
+      {% endfor %}
+    
+    
+    {% endif %}
+    </tbody>
+    </table>
+    
+    {% else %}
+    <div class='col-md-6 offset-md-3'>
+        <h1>Log in</h1>
+        <form method='POST' action={% url 'home' %}>
+            {% csrf_token %}
+           
+                <div class="mb-3">
+                  <input type="text" class="form-control" name='username' placeholder='username' required>
+                </div>
+                <div class="mb-3">
+                  <input type="password" class="form-control" name='password' placeholder='password' required>
+                </div>
+                
+                <button type="submit" class="btn btn-secondary">Log in</button>
+             
+        </form>
+    
+    
+    </div>
+    {% endif %}
+
+{% endblock %}
