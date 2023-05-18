@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import SignUpForm
-from .models import Record
+from .models import Record,Prefix,Site
 
 def home(request):
     records = Record.objects.all().order_by('create_at')
@@ -53,4 +53,23 @@ def register_user(request):
 
 def BootstrapFilterView(request):
     records = Record.objects.all()
-    return render(request,"bottstrap_form.html",{'records':records})
+    prefix = Prefix.objects.all()
+    site = Site.objects.all()
+
+
+    query_contains_site = request.GET.get('site')
+    query_contains_prefix = request.GET.get('prefix')
+
+    if query_contains_site != '' and query_contains_site is not None:
+        records = records.filter(site=query_contains_site)
+    
+    elif query_contains_prefix != '' and query_contains_prefix is not None:
+        records = records.filter(prefix=query_contains_prefix)   
+
+    context = {
+        'records': records,
+        'prefix': prefix,
+        'site': site
+    }
+
+    return render(request,"bottstrap_form.html",context)

@@ -7,7 +7,7 @@
 <table class="table table-hover table-bordered table-inverse">
   <thead>
     <tr>
-      <th scope="col">Site</th>
+      <th scope="col">BGP data from DC</th>
       <th scope="col">Date and Time</th>
       <th scope="col">Local Time and Date</th>
       <th scope="col">Prefix</th>
@@ -38,29 +38,29 @@
   {% for record in records %}
 
   <tr>
-    <td>{{record.site}} </td>
-    <td>{{record.create_at}}</td>
-    <td>{{record.local_timezone}}</td>
-    <td>{{record.prefix}}</td>
-    <td>{{record.path}}</td>
-    <td>{{record.bgp_as_path}}</td>
-    <td>{{record.bgp_as_path_length}}</td>
-    <td>{{record.best_path_selection_reason}}</td>
-    <td>{{record.metric}}</td>
-    <td>{{record.weight}}</td>
-    <td>{{record.localpref}}</td>
+    <td class="text-center">{{record.site}} </td>
+    <td class="text-center">{{record.create_at}}</td>
+    <td class="text-center">{{record.local_timezone}}</td>
+    <td class="text-center">{{record.prefix}}</td>
+    <td class="text-center">{{record.path}}</td>
+    <td class="text-center">{{record.bgp_as_path}}</td>
+    <td class="text-center">{{record.bgp_as_path_length}}</td>
+    <td class="text-center">{{record.best_path_selection_reason}}</td>
+    <td class="text-center">{{record.metric}}</td>
+    <td class="text-center">{{record.weight}}</td>
+    <td class="text-center">{{record.localpref}}</td>
     
-    <td>{{record.last_update}}</td>
-    <td>{{record.next_hop}}</td>
+    <td class="text-center">{{record.last_update}}</td>
+    <td class="text-center">{{record.next_hop}}</td>
     
-    <td>{{record.next_hope_accessible}}</td>
-    <td>{{record.next_hope_used}}</td>
-    <td>{{record.next_hope_metric}}</td>
+    <td class="text-center">{{record.next_hope_accessible}}</td>
+    <td class="text-center">{{record.next_hope_used}}</td>
+    <td class="text-center">{{record.next_hope_metric}}</td>
     
-    <td> {{record.next_hope_peerId}}</td>
-    <td> {{record.next_hope_routerId}}</td>
-    <td> {{record.next_hope_hostname}}</td>
-    <td>{{record.next_hope_peer_type}}</td>
+    <td class="text-center"> {{record.next_hope_peerId}}</td>
+    <td class="text-center"> {{record.next_hope_routerId}}</td>
+    <td class="text-center"> {{record.next_hope_hostname}}</td>
+    <td class="text-center">{{record.next_hope_peer_type}}</td>
   </tr>
 
   {% endfor %}

@@ -2,22 +2,25 @@
 {% load static %}
 {%block content%}
 <main role="main" class="container">
+  <form method="GET" action="">
         <div class="form-row">
-            <div class="form-group col-md-2">
+            
+             <div class="form-group col-md-2">
                 <label for="category">Site</label>
                 <select id="category" class="form-control" name="site">
                   <option selected>Choose...</option>
-                  {% for cat in categories %}
-                  <option value="{{ cat }}">{{ cat }}</option>
+                  {% for s in site %}
+                  <option value="{{ s }}">{{ s }}</option>
                   {% endfor %}
                 </select>
               </div>
+
               <div class="form-group col-md-3">
                 <label for="category">Prefix</label>
-                <select id="category" class="form-control" name="site">
+                <select id="category" class="form-control" name="prefix">
                   <option selected>Choose...</option>
-                  {% for cat in categories %}
-                  <option value="{{ cat }}">{{ cat }}</option>
+                  {% for p in prefix %}
+                  <option value="{{ p }}">{{ p }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -26,42 +29,28 @@
             <label for="publishDateMin">Date minimum</label>
             <input type="date" class="form-control" id="publishDateMin" name="date_min">
           </div>
+
           <div class="form-group col-md-2 col-lg-2">
             <label for="publishDateMax">Date maximum</label>
             <input type="date" class="form-control" id="publishDateMax" name="date_max">
+            
           </div>
-          <button type="submit" class="btn btn-primary">Search</button>
+          
+          <div class="form-group  col-lg-3" style="margin: 26px 0 0 0">
+            <button type="submit" class="btn  btn-dark btn-lg">Search</button>
+            
+          </div>
+          
+          </div>
+          
+       
         </div>
-       
-       
         
       </form>
-
-      <hr />
-
-      <div class="row">
-        <ul>
-          {% for journal in queryset %}
-            <li>
-              {{ journal.title }}
-              <span>Author: {{ journal.author.name }}</span>
-              <span>
-                {% for cat in journal.categories.all %}
-                  {{ cat }}
-                {% endfor %}
-              </span>
-              <span>Publish date: {{ journal.publish_date }}</span>
-              <span>View count: {{ journal.views }}</span>
-              <span>Reviewed: {{ journal.reviewed }}</span>
-            </li>
-            <hr />
-          {% endfor %}
-        </ul>
-      </div>
-
-      
-    
     </main>
+ 
+    
+
     
     {% if user.is_authenticated %}
 
@@ -99,29 +88,29 @@
       {% for record in records %}
     
       <tr>
-        <td>{{record.site}} </td>
-        <td>{{record.create_at}}</td>
-        <td>{{record.local_timezone}}</td>
-        <td>{{record.prefix}}</td>
-        <td>{{record.path}}</td>
-        <td>{{record.bgp_as_path}}</td>
-        <td>{{record.bgp_as_path_length}}</td>
-        <td>{{record.best_path_selection_reason}}</td>
-        <td>{{record.metric}}</td>
-        <td>{{record.weight}}</td>
-        <td>{{record.localpref}}</td>
+        <td class="text-center">{{record.site}} </td>
+        <td class="text-center">{{record.create_at}}</td>
+        <td class="text-center">{{record.local_timezone}}</td>
+        <td class="text-center">{{record.prefix}}</td>
+        <td class="text-center">{{record.path}}</td>
+        <td class="text-center">{{record.bgp_as_path}}</td>
+        <td class="text-center">{{record.bgp_as_path_length}}</td>
+        <td class="text-center">{{record.best_path_selection_reason}}</td>
+        <td class="text-center">{{record.metric}}</td>
+        <td class="text-center">{{record.weight}}</td>
+        <td class="text-center">{{record.localpref}}</td>
         
-        <td>{{record.last_update}}</td>
-        <td>{{record.next_hop}}</td>
+        <td class="text-center">{{record.last_update}}</td>
+        <td class="text-center">{{record.next_hop}}</td>
         
-        <td>{{record.next_hope_accessible}}</td>
-        <td>{{record.next_hope_used}}</td>
-        <td>{{record.next_hope_metric}}</td>
+        <td class="text-center">{{record.next_hope_accessible}}</td>
+        <td class="text-center">{{record.next_hope_used}}</td>
+        <td class="text-center">{{record.next_hope_metric}}</td>
         
-        <td> {{record.next_hope_peerId}}</td>
-        <td> {{record.next_hope_routerId}}</td>
-        <td> {{record.next_hope_hostname}}</td>
-        <td>{{record.next_hope_peer_type}}</td>
+        <td class="text-center"> {{record.next_hope_peerId}}</td>
+        <td class="text-center"> {{record.next_hope_routerId}}</td>
+        <td class="text-center"> {{record.next_hope_hostname}}</td>
+        <td class="text-center">{{record.next_hope_peer_type}}</td>
       </tr>
     
       {% endfor %}
