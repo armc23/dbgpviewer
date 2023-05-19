@@ -18,7 +18,7 @@
               <div class="form-group col-md-3">
                 <label for="category">Prefix</label>
                 <select id="category" class="form-control" name="prefix">
-                  <option selected>Choose...</option>
+                  <option selected >Choose...</option>
                   {% for p in prefix %}
                   <option value="{{ p }}">{{ p }}</option>
                   {% endfor %}
@@ -53,7 +53,7 @@
 
     
     {% if user.is_authenticated %}
-
+{{query_contains_prefix}} {{query_contains_site}}
     <table class="table table-hover table-bordered table-inverse">
       <thead>
         <tr>

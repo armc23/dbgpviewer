@@ -51,25 +51,45 @@ def register_user(request):
         return render(request,'register.html',{'form':form}) 
     return render(request, 'register.html', {'form':form})
 
+def is_valid_queryparam(param):
+    return param != '' and param is None
+
 def BootstrapFilterView(request):
     records = Record.objects.all()
     prefix = Prefix.objects.all()
     site = Site.objects.all()
 
+    date_min = request.GET.get('date_min')
+    date_max = request.GET.get('date_max')
+
 
     query_contains_site = request.GET.get('site')
+    #uery_contains_site= query_contains_site.strip()
     query_contains_prefix = request.GET.get('prefix')
+    #query_contains_prefix = query_contains_prefix.strip()
 
-    if query_contains_site != '' and query_contains_site is not None:
-        records = records.filter(site=query_contains_site)
+    print(query_contains_site)
+    print(query_contains_prefix)
+
+    if is_valid_queryparam(query_contains_site) and query_contains_site != 'Choose...':
+        records = records.filter(site__icontains=query_contains_site)
     
-    elif query_contains_prefix != '' and query_contains_prefix is not None:
-        records = records.filter(prefix=query_contains_prefix)   
+    elif is_valid_queryparam(query_contains_prefix) and query_contains_prefix != 'Choose...':
+        records = records.filter(prefix__icontains=query_contains_prefix)
+
+    if is_valid_queryparam(date_min):
+        records =records.filter(create_at__gte=date_min)
+
+    if is_valid_queryparam(date_max):
+       records = records.filter(create_at__lt=date_max)
+    
 
     context = {
         'records': records,
         'prefix': prefix,
         'site': site
+        #'query_contains_prefix':query_contains_prefix,
+        #'query_contains_site':query_contains_site
     }
 
     return render(request,"bottstrap_form.html",context)
