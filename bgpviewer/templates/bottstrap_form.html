@@ -114,8 +114,19 @@
       </tr>
     
       {% endfor %}
+{% comment %}   {{record}}
+    {{record.has_previous}}
+    {{record.has_next}}
+    {{record.number}}
+    {{record.paginator.num_pages}} {% endcomment %}
     
     
+    {% if record.has_previous %}
+         <a href="?page=1">$laquo First</a>
+         <a href="?page={{record.previous_page_number}}">$laquo First</a>
+    
+    {% endif %}
+
     {% endif %}
     </tbody>
     </table>
