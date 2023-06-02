@@ -55,16 +55,24 @@ def register_user(request):
 def is_valid_queryparam(param):
     return param != '' and param is None
 
+
+
 def BootstrapFilterView(request):
+    #get all objects
     records = Record.objects.all()
+    
+
+    #get prefixes
     prefix = Prefix.objects.all()
     site = Site.objects.all()
 
 
-
-    p = Paginator(Record.objects.all(),2)
+    p = Paginator(Record.objects.all(),12)
     page = request.GET.get('page')
     record = p.get_page(page)
+
+    nums = "a" * record.paginator.num_pages
+
 
     date_min = request.GET.get('date_min')
     date_max = request.GET.get('date_max')
@@ -73,8 +81,8 @@ def BootstrapFilterView(request):
     query_contains_site = request.GET.get('site')
     query_contains_prefix = request.GET.get('prefix')
 
-    print(query_contains_site)
-    print(query_contains_prefix)
+    #print(query_contains_site)
+    #print(query_contains_prefix)
 
     if query_contains_site and query_contains_site != 'Choose...':
        records = records.filter(site__icontains=query_contains_site)
@@ -101,7 +109,8 @@ def BootstrapFilterView(request):
         'records': records,
         'prefix': prefix,
         'site': site,
-        'record':record
+        'record':record,
+        'nums':nums
         #'query_contains_prefix':query_contains_prefix,
         #'query_contains_site':query_contains_site
     }

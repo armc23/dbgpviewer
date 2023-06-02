@@ -115,6 +115,7 @@
       </tr>
     
       {% endfor %}
+
 {% comment %}   {{record}}
     {{record.has_previous}}
     {{record.has_next}}
@@ -122,16 +123,42 @@
     {{record.paginator.num_pages}} {% endcomment %}
     
     
-    {% if record.has_previous %}
-         <a href="?page=1">$laquo First</a>
-         <a href="?page={{record.previous_page_number}}">$laquo First</a>
-    
-    {% endif %}
+   
+
+
 
     {% endif %}
+  
+
     </tbody>
     </table>
+
+    <nav aria-label="...">
+      <ul class="pagination justify-content-center">
     
+      
+    {% if record.has_previous %}
+    
+    <li class="page-item"> <a class="page-link"  href="?page=1">&laquo First</a></li>
+    <li class="page-item "><a  class="page-link"  href="?page={{record.previous_page_number}}">&laquo Previous</a></li>
+
+    {% endif %}
+     
+    {% for i in nums %}
+    <li class="page-item"> <a class="page-link"  href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+    
+    {% endfor %}
+  
+    {% if record.has_next %}
+    
+    <li class="page-item"><a  class="page-link"  href="?page={{record.next_page_number}}">Next</a></li>
+    <li class="page-item"><a class="page-link"  href="?page={{record.paginator.num_pages}}">Last &raquo</a></li>
+
+    {% endif %}
+    </ul>
+  </nav>
+
+
     {% else %}
     <div class='col-md-6 offset-md-3'>
         <h1>Log in</h1>
