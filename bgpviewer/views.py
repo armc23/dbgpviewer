@@ -8,6 +8,21 @@ from django.core.paginator import Paginator
 def home(request):
     records = Record.objects.all().order_by('create_at')
 
+
+    p = Paginator(Record.objects.all(),12)
+    page = request.GET.get('page')
+    record = p.get_page(page)
+
+    nums = "a" * record.paginator.num_pages
+
+     
+    context = {
+    'records': records,
+    'record':record,
+    'nums':nums
+ 
+    }
+
     #Check to see if login in 
     if request.method =='POST':
         username = request.POST['username']
@@ -16,15 +31,15 @@ def home(request):
         user = authenticate(request, username=username,password=password)
         if user is not None:
             login(request,user)
-            messages.success(request,"You have been logged in")
+           # messages.success(request,"You have been logged in")
             return redirect('home')
         else:
             messages.success(request,"There was an error loggin in, please try again ")
             return redirect('home')
     else:
-       
+    
 
-       return render(request, 'home.html', {'records':records})
+       return render(request, 'home.html', context)
 
 
 #
@@ -58,8 +73,8 @@ def is_valid_queryparam(param):
 
 
 def BootstrapFilterView(request):
-    #get all objects
-    records = Record.objects.all()
+    #get all objectss
+    records = Record.objects.all().order_by('-create_at')
     
 
     #get prefixes
@@ -67,11 +82,7 @@ def BootstrapFilterView(request):
     site = Site.objects.all()
 
 
-    p = Paginator(Record.objects.all(),12)
-    page = request.GET.get('page')
-    record = p.get_page(page)
-
-    nums = "a" * record.paginator.num_pages
+   
 
 
     date_min = request.GET.get('date_min')
@@ -109,8 +120,7 @@ def BootstrapFilterView(request):
         'records': records,
         'prefix': prefix,
         'site': site,
-        'record':record,
-        'nums':nums
+      
         #'query_contains_prefix':query_contains_prefix,
         #'query_contains_site':query_contains_site
     }

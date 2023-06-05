@@ -35,7 +35,7 @@
     
 
 {% if records  %}
-  {% for record in records %}
+  {% for record in record %}
 
   <tr>
     <td class="text-center">{{record.site}} </td>
@@ -70,25 +70,80 @@
 </tbody>
 </table>
 
+
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+
+  
+{% if record.has_previous %}
+
+<li class="page-item"> <a class="page-link"  href="?page=1">&laquo First</a></li>
+<li class="page-item "><a  class="page-link"  href="?page={{record.previous_page_number}}">&laquo Previous</a></li>
+
+{% endif %}
+ 
+{% for i in nums %}
+<li class="page-item "> <a class="page-link"  href="?page={{forloop.counter}}">{{forloop.counter}}<span class="sr-only">(current)</span></a></li>
+
+{% endfor %}
+
+{% if record.has_next %}
+
+<li class="page-item"><a  class="page-link"  href="?page={{record.next_page_number}}">Next</a></li>
+<li class="page-item"><a class="page-link"  href="?page={{record.paginator.num_pages}}">Last &raquo</a></li>
+
+{% endif %}
+</ul>
+</nav>
+
+
+
+
 {% else %}
-<div class='col-md-6 offset-md-3'>
-    <h1>Log in</h1>
-    <form method='POST' action={% url 'home' %}>
-        {% csrf_token %}
-       
-            <div class="mb-3">
-              <input type="text" class="form-control" name='username' placeholder='username' required>
-            </div>
-            <div class="mb-3">
-              <input type="password" class="form-control" name='password' placeholder='password' required>
-            </div>
+
+
+
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <div class="mb-md-5 mt-md-4 pb-5">
+
+              <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+              <p class="text-white mb-5">Please enter your login and password!</p>
+              <form method='POST' action={% url 'home' %}>
+                {% csrf_token %}
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="typeEmailX">Username</label>
+                <input type="text" id="typeEmailX" class="form-control form-control-lg" name='username' placeholder='username' required />
+                
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="typePasswordX">Password</label>
+                <input type="password" id="typePasswordX" class="form-control form-control-lg" name='password' placeholder='password' required />
+                
+              </div>
+
+              
+
+              <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+
             
-            <button type="submit" class="btn btn-secondary">Log in</button>
-         
-    </form>
+            </form>
+            </div>
+
+           
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-</div>
 {% endif %}
 
 {% endblock %}
