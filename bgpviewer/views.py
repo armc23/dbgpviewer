@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from .forms import SignUpForm
 from .models import Record,Prefix,Site
-from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 def home(request):
     records = Record.objects.all().order_by('create_at')
@@ -70,7 +70,7 @@ def register_user(request):
 def is_valid_queryparam(param):
     return param != '' and param is None
 
-
+result_req_per_page = 15
 
 def BootstrapFilterView(request):
     #get all objectss
@@ -81,22 +81,14 @@ def BootstrapFilterView(request):
     prefix = Prefix.objects.all()
     site = Site.objects.all()
 
-
-   
-
-
     date_min = request.GET.get('date_min')
     date_max = request.GET.get('date_max')
-
 
     query_contains_site = request.GET.get('site')
     query_contains_prefix = request.GET.get('prefix')
 
-    #print(query_contains_site)
-    #print(query_contains_prefix)
-
     if query_contains_site and query_contains_site != 'Choose...':
-       records = records.filter(site__icontains=query_contains_site)
+      records = records.filter(site__icontains=query_contains_site)
        
     elif (query_contains_site and query_contains_site != 'Choose...') and (query_contains_prefix and query_contains_prefix != 'Choose...'):
        records = records.filter(ite__icontains=query_contains_site,prefix__icontains=query_contains_prefix)
@@ -105,21 +97,38 @@ def BootstrapFilterView(request):
        records = records.filter(prefix__icontains=query_contains_prefix)
     
     
-    
-    
-
-
     if date_min and date_min != '':
        records =records.filter(create_at__gte=date_min)
 
     if date_max and date_max!= '':
       records = records.filter(create_at__lte=date_max)
+
+    #print(query_contains_site)
+    #print(query_contains_prefix)
+
+    #Pagination
+
+    page = request.GET.get('page',1)
+    record_paginator = Paginator(records,result_req_per_page)
+
+    try:
+        records = record_paginator.page(page)
+    except EmptyPage:
+        records = record_paginator.page(record_paginator.num_pages)
+    except PageNotAnInteger:
+        records =record_paginator.page(result_req_per_page)
     
+
+
+   
 
     context = {
         'records': records,
         'prefix': prefix,
         'site': site,
+        'page_obj': records,
+        'is_paginated':True,
+        'paginator': record_paginator
       
         #'query_contains_prefix':query_contains_prefix,
         #'query_contains_site':query_contains_site
