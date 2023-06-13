@@ -88,20 +88,20 @@ def BootstrapFilterView(request):
     query_contains_prefix = request.GET.get('prefix')
 
     if query_contains_site and query_contains_site != 'Choose...':
-      records = records.filter(site__icontains=query_contains_site)
+        records = records.filter(site__icontains=query_contains_site)
        
     elif (query_contains_site and query_contains_site != 'Choose...') and (query_contains_prefix and query_contains_prefix != 'Choose...'):
-       records = records.filter(ite__icontains=query_contains_site,prefix__icontains=query_contains_prefix)
+        records = records.filter(ite__icontains=query_contains_site,prefix__icontains=query_contains_prefix)
     
     elif query_contains_prefix and query_contains_prefix != 'Choose...':
-       records = records.filter(prefix__icontains=query_contains_prefix)
+        records = records.filter(prefix__icontains=query_contains_prefix)
     
     
     if date_min and date_min != '':
-       records =records.filter(create_at__gte=date_min)
+        records =records.filter(create_at__gte=date_min)
 
     if date_max and date_max!= '':
-      records = records.filter(create_at__lte=date_max)
+        records = records.filter(create_at__lte=date_max)
 
     #print(query_contains_site)
     #print(query_contains_prefix)

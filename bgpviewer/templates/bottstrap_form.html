@@ -84,7 +84,8 @@
   {% if user.is_authenticated %}
 
     
-    {% if records  %}
+   
+    {% comment %}   {% if records  %}{% endcomment %}
       {% for record in records %}
     
       <tr>
@@ -127,7 +128,7 @@
 
 
 
-    {% endif %}
+    {% comment %}  {% endif %}{% endcomment %}
   
 
     </tbody>
