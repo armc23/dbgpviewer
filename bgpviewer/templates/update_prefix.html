@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block content%}
+ 
+ 
+      
+    
+    
+       
+      
+          
+    {% if user.is_authenticated %}
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+          
+       
+
+            <table class="table table-hover  table-striped ">
+         
+                <tr>
+                  <th scope="col" class="text-center" style=" font-size: 30px; color: #413973">Prefixes</th>
+                  <th scope="col" class="text-center" style=" font-size: 30px; color: #413973"></th>
+                   
+                </tr>
+             
+            
+                
+      
+              <tr>
+                <td  >
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        
+                           {{form.as_p}}
+                   
+                           <td >  
+                            <input class="btn btn-secondary " value="Update" type="submit">
+                           </td>
+                       </form>    
+                </tr>
+               
+ 
+            </table>
+           
+           
+        
+       
+        </div>
+      </div>
+    </div>
+   
+  
+  
+  
+  
+      {% else %}
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-dark text-white" style="border-radius: 1rem;">
+              <div class="card-body p-5 text-center">
+    
+                <div class="mb-md-5 mt-md-4 pb-5">
+    
+                  <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                  <p class="text-white mb-5">Please enter your login and password!</p>
+                  <form method='POST' action={% url 'home' %}>
+                    {% csrf_token %}
+                  <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="typeEmailX">Username</label>
+                    <input type="text" id="typeEmailX" class="form-control form-control-lg" name='username' placeholder='username' required />
+                    
+                  </div>
+    
+                  <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="typePasswordX">Password</label>
+                    <input type="password" id="typePasswordX" class="form-control form-control-lg" name='password' placeholder='password' required />
+                    
+                  </div>
+    
+                  
+    
+                  <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+    
+                
+                </form>
+                </div>
+    
+               
+    
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+  
+
+{% endblock %}

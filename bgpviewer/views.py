@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
-from .forms import SignUpForm
+from .forms import SignUpForm,PrefixForm
 from .models import Record,Prefix,Site
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
@@ -42,8 +42,36 @@ def home(request):
        return render(request, 'home.html', context)
 
 
-#
- #   pass
+def prefixes(request):
+    prefix = Prefix.objects.all()
+
+     
+    context = {
+    'prefix': prefix
+ 
+    }
+ 
+    return render(request, 'prefixes.html', context)
+
+def update_prefixes(request, prefix_id):
+    prefix = Prefix.objects.get(pk=prefix_id)
+
+    form = PrefixForm(request.POST or None, instance=prefix)
+
+    if form.is_valid():
+        form.save()
+        return redirect('prefixes')
+    
+    context = {
+    'prefix': prefix,
+    'form': form
+ 
+    }
+ 
+    return render(request, 'update_prefix.html', context)
+
+
+#   pass
 
 def logout_user(request):
     logout(request)

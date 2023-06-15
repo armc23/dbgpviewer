@@ -10,6 +10,8 @@ urlpatterns = [
     path('logout', views.logout_user, name='logout'),
     path('register', views.register_user, name='register'),
     path('filter', views.BootstrapFilterView, name='filter'),
+    path('prefixes', views.prefixes, name='prefixes'),
+    path('update_prefixes/<prefix_id>', views.update_prefixes, name='update-prefixes'),
    
 ]
 

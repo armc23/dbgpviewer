@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from django.forms import ModelForm
+from .models import Prefix
 
 
 class SignUpForm(UserCreationForm):
@@ -27,3 +29,11 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'	
 
+#Create Prefix form
+
+class PrefixForm(forms.ModelForm):
+   # prefix = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
+    
+    class Meta:
+        model = Prefix
+        fields = ('prefix_le',)
