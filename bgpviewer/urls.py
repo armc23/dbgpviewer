@@ -12,6 +12,12 @@ urlpatterns = [
     path('filter', views.BootstrapFilterView, name='filter'),
     path('prefixes', views.prefixes, name='prefixes'),
     path('update_prefixes/<prefix_id>', views.update_prefixes, name='update-prefixes'),
+    path('add_prefix', views.add_prefix, name='add-prefix'),
+    path('delete_prefix/<prefix_id>', views.delete_prefix, name='delete-prefix'),
+    path('sites', views.sites, name='sites'),
+    path('update_sites/<site_id>', views.update_sites, name='update-sites'),
+    path('add_site', views.add_sites, name='add-sites'),
+    path('delete_sites/<site_id>', views.delete_sites, name='delete-sites'),
    
 ]
 

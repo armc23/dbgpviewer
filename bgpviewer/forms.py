@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from django.forms import ModelForm
-from .models import Prefix
+from .models import Prefix,Site
 
 
 class SignUpForm(UserCreationForm):
@@ -37,3 +37,12 @@ class PrefixForm(forms.ModelForm):
     class Meta:
         model = Prefix
         fields = ('prefix_le',)
+
+#Create Sites form
+
+class SitesForm(forms.ModelForm):
+   # prefix = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
+    
+    class Meta:
+        model = Site
+        fields = ('name',)

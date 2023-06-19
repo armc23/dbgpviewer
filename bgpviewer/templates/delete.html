@@ -2,39 +2,54 @@
 {% load static %}
 {%block content%}
  
-<div class="row justify-content-center">
-  <div class="col-6">
+ 
       
     
-      <table class="table table-hover table-bordered table-striped ">
-         
-          <tr>
-            <th scope="col" class="text-center" style=" font-size: 30px; color: #413973">Prefixes 
-            <a class="btn btn-outline-success"  href="{% url 'add-prefix' %}">+ Add Prefix</a> </th>
-             
-          </tr>
+    
        
       
           
     {% if user.is_authenticated %}
-        {% for p in prefix %}    
-        <tr>
-          <td  >{{p.prefix_le}} </td>
-          <td  align="right">
-            <a href="{% url 'update-prefixes' p.id %}" class="btn btn-outline-secondary" >Update</a>
-            <a href="{% url 'delete-prefix' p.id %} " class="btn btn-outline-danger">Delete</a>
-          </td>
-        </tr>
-        
+
+     
+    <div class="row justify-content-center">
+        <div class="col-6">
+          
+       
+
+            <table class="table table-hover  table-striped ">
+         
+                <tr>
+                  <th scope="col" class="text-center" style=" font-size: 30px; color: #413973"> Are you sure you want to delete "{{item}}"? </th>
+                  <th scope="col" class="text-center" style=" font-size: 30px; color: #413973"></th>
+                   
+                </tr>
+             
+            
+                
       
-        {% endfor %}
-  
+              <tr>
+                <td  >
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        
+                           {{form.as_p}}
+                   
+                           <td >  
+                            <a class="navbar-brand" href="{% url 'sites' %}">Cancel</a>
+                            <input class="btn btn-outline-danger" value="Delete" name="confirm" type="submit">
+                           </td>
+                       </form>    
+                </tr>
  
-   
-      </table>
+            </table>
+           
+        
+       
+        </div>
+      </div>
   
-    </div>
-  </div>
+  
   
   
       {% else %}

@@ -3,26 +3,26 @@
 {%block content%}
  
 <div class="row justify-content-center">
-  <div class="col-6">
+    <div class="col-6">
       
     
       <table class="table table-hover table-bordered table-striped ">
          
           <tr>
-            <th scope="col" class="text-center" style=" font-size: 30px; color: #413973">Prefixes 
-            <a class="btn btn-outline-success"  href="{% url 'add-prefix' %}">+ Add Prefix</a> </th>
+            <th scope="col" class="text-center" style=" font-size: 30px; padding-right: 30px; color: #413973">Sites 
+             <a class="btn btn-outline-success"  href="{% url 'add-sites' %}">+ Add Site</a></th>
              
           </tr>
        
       
           
     {% if user.is_authenticated %}
-        {% for p in prefix %}    
+        {% for p in sites %}    
         <tr>
-          <td  >{{p.prefix_le}} </td>
+          <td  >{{p.name}} </td>
           <td  align="right">
-            <a href="{% url 'update-prefixes' p.id %}" class="btn btn-outline-secondary" >Update</a>
-            <a href="{% url 'delete-prefix' p.id %} " class="btn btn-outline-danger">Delete</a>
+            <a href="{% url 'update-sites' p.id %}"class="btn btn-outline-secondary">Update</a>
+            <a href="{% url 'delete-sites' p.id %} " class="btn btn-outline-danger">Delete</a>
           </td>
         </tr>
         
@@ -34,7 +34,7 @@
       </table>
   
     </div>
-  </div>
+</div>
   
   
       {% else %}

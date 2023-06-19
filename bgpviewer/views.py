@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
-from .forms import SignUpForm,PrefixForm
+from .forms import SignUpForm,PrefixForm,SitesForm
 from .models import Record,Prefix,Site
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
@@ -40,7 +40,7 @@ def home(request):
     
 
        return render(request, 'home.html', context)
-
+# Prefixes
 
 def prefixes(request):
     prefix = Prefix.objects.all()
@@ -52,7 +52,7 @@ def prefixes(request):
     }
  
     return render(request, 'prefixes.html', context)
-
+# Update Prefixes
 def update_prefixes(request, prefix_id):
     prefix = Prefix.objects.get(pk=prefix_id)
 
@@ -69,6 +69,108 @@ def update_prefixes(request, prefix_id):
     }
  
     return render(request, 'update_prefix.html', context)
+
+# add Prefix
+def add_prefix(request):
+
+ 
+    form = PrefixForm()
+    if request.method =="POST":
+        form = PrefixForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('prefixes')
+    
+    context = {
+   
+    'form': form
+ 
+    }
+ 
+    return render(request, 'add_prefix.html', context)
+
+#Delete Prefix
+
+def delete_prefix(request, prefix_id):
+    prefix = Prefix.objects.get(pk=prefix_id)
+
+    if request.method == "POST":
+        prefix.delete()
+        return redirect('prefixes')
+    
+    context = {
+    'item': prefix,
+    
+ 
+    }
+ 
+    return render(request, 'delete_prefix.html', context)
+
+# Sites
+
+def sites(request):
+    sites = Site.objects.all()
+
+     
+    context = {
+    'sites': sites
+ 
+    }
+ 
+    return render(request, 'sites.html', context)
+
+# Update Sites
+def update_sites(request, site_id):
+    sites = Site.objects.get(pk=site_id)
+
+    form = SitesForm(request.POST or None, instance=sites)
+
+    if form.is_valid():
+        form.save()
+        return redirect('sites')
+    
+    context = {
+    'sites': sites,
+    'form': form
+ 
+    }
+ 
+    return render(request, 'update_site.html', context)
+
+# add Sites
+def add_sites(request):
+
+ 
+    form = SitesForm()
+    if request.method =="POST":
+        form = SitesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('sites')
+    
+    context = {
+   
+    'form': form
+ 
+    }
+ 
+    return render(request, 'add_site.html', context)
+
+def delete_sites(request, site_id):
+    sites = Site.objects.get(pk=site_id)
+
+    if request.method == "POST":
+        sites.delete()
+        return redirect('sites')
+    
+    context = {
+    'item': sites,
+    
+ 
+    }
+ 
+    return render(request, 'delete.html', context)
+
 
 
 #   pass
@@ -115,11 +217,14 @@ def BootstrapFilterView(request):
     query_contains_site = request.GET.get('site')
     query_contains_prefix = request.GET.get('prefix')
 
+    if (query_contains_site and query_contains_site != 'Choose...') and (query_contains_prefix and query_contains_prefix != 'Choose...'):
+        records = records.filter(site__icontains=query_contains_site,prefix__icontains=query_contains_prefix)
+
     if query_contains_site and query_contains_site != 'Choose...':
         records = records.filter(site__icontains=query_contains_site)
        
     elif (query_contains_site and query_contains_site != 'Choose...') and (query_contains_prefix and query_contains_prefix != 'Choose...'):
-        records = records.filter(ite__icontains=query_contains_site,prefix__icontains=query_contains_prefix)
+        records = records.filter(site__icontains=query_contains_site,prefix__icontains=query_contains_prefix)
     
     elif query_contains_prefix and query_contains_prefix != 'Choose...':
         records = records.filter(prefix__icontains=query_contains_prefix)
